@@ -5,6 +5,13 @@
  */
 package gitbank;
 
+import gitbank.accounts.ContaComum;
+import gitbank.accounts.ContaEspecial;
+import gitbank.accounts.ContaPoupanca;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
+
 /**
  *
  * @author rwietter
@@ -16,14 +23,21 @@ public class ClientRegistration {
     private float renda;
     private boolean situacao;
     private String cpf;
+    
+    private ArrayList<ContaComum> Contas;
 
-    public ClientRegistration(String nome, String endereco, String telefone, float renda, boolean situacao, String cpf) {
+    public ClientRegistration(String nome, String endereco, String telefone, float renda, String cpf) {
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;
         this.renda = renda;
-        this.situacao = situacao;
         this.cpf = cpf;
+        
+        Contas = new ArrayList<ContaComum>();
+    }
+    
+    public ClientRegistration(){
+        
     }
 
     public String getNome() {
@@ -58,7 +72,7 @@ public class ClientRegistration {
         this.renda = renda;
     }
 
-    public boolean isSituacao() {
+    public boolean getSituacao() {
         return situacao;
     }
 
@@ -80,5 +94,13 @@ public class ClientRegistration {
     
     public void consCpf(){
         
+    }
+
+    public ArrayList<ContaComum> getContas() {
+        return Contas;
+    }
+
+    public void setContas(ContaComum conta) {
+        this.Contas.add(conta);
     }
 }

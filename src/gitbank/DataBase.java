@@ -19,11 +19,16 @@ public class DataBase {
     }
     
     public ArrayList<ClientRegistration> getClient() {
-        return client;
+        return this.client;
     }
 
     public void setClient(ClientRegistration client) {
         this.client.add(client);
     }
     
+    public void print(){
+        for(int i = 0; i < client.size(); i++){
+            System.out.println(client.get(i).getNome());
+        }
+    }
 }

@@ -5,6 +5,8 @@
  */
 package gitbank;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author rwietter
@@ -214,9 +216,14 @@ public class GUIClientRegistration extends javax.swing.JDialog {
             jTF_address.getText(),
             jTF_phone.getText(),
             Float.parseFloat(jTF_income.getText()),
-            Boolean.parseBoolean(jCB_situalition.getText()),
             jTF_cpf.getText()
         );
+        
+        if(jCB_situalition.isSelected()){
+            newClient.setSituacao(true);
+        }else {
+            newClient.setSituacao(false);
+        }
         
         this.db.setClient(newClient);
         
