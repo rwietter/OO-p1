@@ -6,6 +6,7 @@
 package gitbank.accounts;
 
 import gitbank.ClientRegistration;
+import gitbank.DataBase;
 import java.util.ArrayList;
 
 /**
@@ -14,15 +15,19 @@ import java.util.ArrayList;
  */
 public class GUIConsultaTipoConta extends javax.swing.JFrame {
     private ClientRegistration client;
-    private GUIConsultaContas GUIconsultaContas;
+    private ContaComum conta;
+    private DataBase database;
+    private GUI_Relatorio gui_relatorio;
     
     public GUIConsultaTipoConta() {
         initComponents();
     }
     
-    public GUIConsultaTipoConta(ClientRegistration client) {
+    public GUIConsultaTipoConta(ClientRegistration client, ContaComum conta, DataBase dB) {
         this.client = client;
-        this.GUIconsultaContas = new GUIConsultaContas(this, rootPaneCheckingEnabled);
+        this.conta = conta;
+        this.database = dB;
+        this.gui_relatorio = new GUI_Relatorio(client, conta, database);
         initComponents();
     }
 
@@ -61,11 +66,13 @@ public class GUIConsultaTipoConta extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTF_nome)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(56, 56, 56)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(56, 56, 56)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(78, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -98,7 +105,8 @@ public class GUIConsultaTipoConta extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String nome = this.jTF_nome.getText();
-        this.GUIconsultaContas.setVisible(true);
+        this.gui_relatorio.setNome(nome);
+        this.gui_relatorio.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

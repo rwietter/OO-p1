@@ -9,6 +9,7 @@ import gitbank.accounts.ContaComum;
 import gitbank.accounts.GUICadastroContaComum;
 import gitbank.accounts.GUIConsultaContas;
 import gitbank.accounts.GUIConsultaTipoConta;
+import gitbank.accounts.GUI_Relatorio;
 import java.util.Date;
 import java.util.UUID;
 import methods.GUIDeposito;
@@ -21,15 +22,16 @@ import methods.GUISaque;
  * @author rwietter
  */
 public class Home extends javax.swing.JFrame {
+    private GUI_Relatorio gui_relatorio;
     private GUIClientRegistration GUIclient;
     private GUIConsultaCliente consultaCliente;
     private GUICadastroContaComum GUIcontaComum;
     private GUIConsultaContas GUIconsultaContas;
-    private GUIConsultaTipoConta GUITipoConta;
     private GUIDeposito GUIdeposito;
     private GUISaque GUIsaque;
     private GUIMeuSaldo GUImeuSaldo;
     private GUIFecharConta GUIfecharConta;
+    private GUIConsultaTipoConta gui_tipoConta;
     
     private ContaComum conta;
     
@@ -41,8 +43,7 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         this.GUIclient = new GUIClientRegistration(this, rootPaneCheckingEnabled, dataBase);
         this.consultaCliente = new GUIConsultaCliente(this, rootPaneCheckingEnabled, dataBase);
-        this.GUIcontaComum = new GUICadastroContaComum(this.client);
-        this.GUITipoConta = new GUIConsultaTipoConta(this.client);
+        this.GUIcontaComum = new GUICadastroContaComum(this.client, this.dataBase);
         this.GUIconsultaContas = new GUIConsultaContas(this, rootPaneCheckingEnabled, this.client);
         this.conta = new ContaComum(UUID.randomUUID(), 0, new Date(), 0, "", 0, "", "");
         this.conta = new ContaComum(this.client);
@@ -50,6 +51,8 @@ public class Home extends javax.swing.JFrame {
         this.GUIsaque = new GUISaque(this.client, this.conta);
         this.GUImeuSaldo = new GUIMeuSaldo(this.client, this.conta);
         this.GUIfecharConta = new GUIFecharConta(this.client, this.conta);
+        this.gui_relatorio = new GUI_Relatorio(this.client, this.conta, this.dataBase);
+        this.gui_tipoConta = new GUIConsultaTipoConta(this.client, this.conta, this.dataBase);
         initComponents();
     }
     
@@ -71,6 +74,7 @@ public class Home extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -122,6 +126,14 @@ public class Home extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem7);
+
+        jMenuItem10.setText("Cliente e Contas");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem10);
 
         jMenuBar1.add(jMenu2);
 
@@ -209,6 +221,10 @@ public class Home extends javax.swing.JFrame {
         this.GUIfecharConta.setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        this.gui_tipoConta.setVisible(true);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -251,6 +267,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

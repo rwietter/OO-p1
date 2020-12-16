@@ -6,6 +6,7 @@
 package gitbank.accounts;
 
 import gitbank.ClientRegistration;
+import gitbank.DataBase;
 import java.util.Date;
 import java.util.UUID;
 import javax.swing.JOptionPane;
@@ -19,15 +20,15 @@ public class GUICadastroContaComum extends javax.swing.JFrame {
     private ContaComum contaComum;
     private ContaEspecial contaEspecial;
     private ContaPoupanca contaPoupanca;
-    /** 
-     * Creates new form GUICadastroContaComum
-     */
+    private DataBase database;
+
     public GUICadastroContaComum() {
         initComponents();
     }
 
-    public GUICadastroContaComum(ClientRegistration client) {
+    public GUICadastroContaComum(ClientRegistration client, DataBase dB) {
         this.client = client;
+        this.database = dB;
         initComponents();
     }    
 
@@ -162,32 +163,38 @@ public class GUICadastroContaComum extends javax.swing.JFrame {
     }//GEN-LAST:event_jTF_SenhaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
        Float Valor = Float.parseFloat(this.jTF_Valor.getText());
        int Tipo = Integer.parseInt(this.jTF_Tipo.getText());
        String Senha = this.jTF_Senha.getText();
        String nome = this.jTF_nome.getText();
        
-       this.contaComum = new ContaComum(UUID.randomUUID(), 0, new Date(), 1, "", 0, "", "");
-       this.contaPoupanca = new ContaPoupanca(UUID.randomUUID(), 0, new Date(), 1, "", 0, "", "");
-       this.contaEspecial = new ContaEspecial(0, UUID.randomUUID(), 0, new Date(), 1, "", 0, "", "");
-       
-       String numConta = "";
-        
-       if(Tipo == 1){
-           numConta = this.contaComum.aberturaConta(Valor, Tipo, Senha, nome);
-           this.client.setContas(contaComum);
-       } else if(Tipo == 2){
-           numConta = this.contaEspecial.aberturaConta(Valor, Tipo, Senha, nome);
-           this.contaEspecial.setLimite(9000);
-           this.client.setContas(contaEspecial);
-       } else if (Tipo == 3){
-           numConta = this.contaPoupanca.aberturaConta(Valor, Tipo, Senha, nome);
-           this.client.setContas(contaPoupanca);
-       } else {
-           System.out.println("Tipo de conta não informado");
-       }
-        JOptionPane.showMessageDialog(null, "O número da sua conta é: " + numConta);
-       
+       this.database.getClient().forEach(cliente -> {
+           if(cliente.getNome().toUpperCase().equals(nome.toUpperCase())){
+            this.contaComum = new ContaComum(UUID.randomUUID(), 0, new Date(), 1, "", 0, "", "");
+            this.contaPoupanca = new ContaPoupanca(UUID.randomUUID(), 0, new Date(), 1, "", 0, "", "");
+            this.contaEspecial = new ContaEspecial(0, UUID.randomUUID(), 0, new Date(), 1, "", 0, "", "");
+
+            String numConta = "";
+
+            if(Tipo == 1){
+                numConta = this.contaComum.aberturaConta(Valor, Tipo, Senha, nome);
+                this.client.setContas(contaComum);
+            } else if(Tipo == 2){
+                numConta = this.contaEspecial.aberturaConta(Valor, Tipo, Senha, nome);
+                this.contaEspecial.setLimite(9000);
+                this.client.setContas(contaEspecial);
+            } else if (Tipo == 3){
+                numConta = this.contaPoupanca.aberturaConta(Valor, Tipo, Senha, nome);
+                this.client.setContas(contaPoupanca);
+            } else {
+                System.out.println("Tipo de conta não informado");
+            }
+             JOptionPane.showMessageDialog(null, "O número da sua conta é: " + numConta);
+           } else {
+               JOptionPane.showMessageDialog(null, "Você não tem nenhum cadastro na Agência, faça um cadastro antes.");
+           }
+       });
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
