@@ -151,7 +151,7 @@ public class GUISaque extends javax.swing.JFrame {
         
         this.client.getContas().forEach(conta -> {
             if(conta.getNumeroConta().equals(numConta)){
-                this.conta.saqueConta(valor, senha);
+                this.conta.saqueConta(valor, senha, numConta);
             }
         });
     }//GEN-LAST:event_jButton1ActionPerformed

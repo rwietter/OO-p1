@@ -106,7 +106,7 @@ public class GUIConsultaCliente extends javax.swing.JDialog {
             valoresLinhas[i][1] = data.get(i).getEndereco();
             valoresLinhas[i][2] = data.get(i).getTelefone();
             valoresLinhas[i][3] = Float.toString(data.get(i).getRenda());
-            valoresLinhas[i][4] = Boolean.toString(data.get(i).getSituacao());
+            valoresLinhas[i][4] = data.get(i).getSituacao() == true ? "Ativo" : "Inativo";
             valoresLinhas[i][5] = data.get(i).getCpf();
         }
         

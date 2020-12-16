@@ -104,8 +104,8 @@ public class ContaPoupanca extends ContaComum {
     }
 
     @Override
-    public float saqueConta(float valor, String senha) {
-        return super.saqueConta(valor, senha); //To change body of generated methods, choose Tools | Templates.
+    public float saqueConta(float valor, String senha, UUID numConta) {
+        return super.saqueConta(valor, senha, numConta); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

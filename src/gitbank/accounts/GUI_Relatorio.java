@@ -120,7 +120,6 @@ public class GUI_Relatorio extends javax.swing.JDialog {
 
     public void setNome(String nome) {
         this.nome = nome;
-        System.out.println(this.nome);
     }
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -144,7 +143,7 @@ public class GUI_Relatorio extends javax.swing.JDialog {
                 linhas[i][2] = clientes.get(i).getEndereco();
                 linhas[i][3] = clientes.get(i).getTelefone();
                 linhas[i][4] = Float.toString(clientes.get(i).getRenda());
-                linhas[i][5] = Boolean.toString(clientes.get(i).getSituacao());
+                linhas[i][5] = clientes.get(i).getSituacao() == true ? "Ativo" : "Inativo";
             }
         }
 
@@ -162,9 +161,11 @@ public class GUI_Relatorio extends javax.swing.JDialog {
             "Saldo",
             "Data de Abertura",
             "Tipo de Conta",
-            "Situacao",};
+            "Situacao",
+            "Data de Encerramento"
+        };
 
-        String[][] valoresLinhas = new String[contas.size()][6];
+        String[][] valoresLinhas = new String[contas.size()][7];
 
         for (int i = 0; i < contas.size(); i++) {
             if (contas.get(i).getNome().equals(this.nome)) {
@@ -172,8 +173,9 @@ public class GUI_Relatorio extends javax.swing.JDialog {
                 valoresLinhas[i][1] = contas.get(i).getNumeroConta().toString();
                 valoresLinhas[i][2] = Double.toString(contas.get(i).getSaldo());
                 valoresLinhas[i][3] = contas.get(i).getDataAbertura().toString();
-                valoresLinhas[i][4] = Integer.toString(contas.get(i).getTipoConta());
-                valoresLinhas[i][5] = Integer.toString(contas.get(i).getSituacao());
+                valoresLinhas[i][4] = contas.get(i).getTipoConta() == 1 ? "Comum" : contas.get(i).getTipoConta() == 2 ? "Especial" : "Popuança";
+                valoresLinhas[i][5] = contas.get(i).getSituacao() == 1 ? "Ativo" : "Inativo";
+                valoresLinhas[i][6] = contas.get(i).getDataEncerramento();
             }
         }
 

@@ -118,8 +118,8 @@ public class GUIConsultaContas extends javax.swing.JDialog {
             valoresLinhas[i][1] = conta.get(i).getNumeroConta().toString();
             valoresLinhas[i][2] = Double.toString(conta.get(i).getSaldo());
             valoresLinhas[i][3] = conta.get(i).getDataAbertura().toString();
-            valoresLinhas[i][4] = Integer.toString(conta.get(i).getTipoConta());
-            valoresLinhas[i][5] = Integer.toString(conta.get(i).getSituacao());
+            valoresLinhas[i][4] = conta.get(i).getTipoConta() == 1 ? "Comum" : conta.get(i).getTipoConta() == 2 ? "Especial" : "Popuança";
+            valoresLinhas[i][5] = conta.get(i).getSituacao() == 1 ? "Ativo" : "Inativo";
         }
         
         DefaultTableModel tableModel = new DefaultTableModel(valoresLinhas, nomeColunas);

@@ -9,6 +9,7 @@ import gitbank.ClientRegistration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,9 +20,9 @@ public class ContaComum {
     protected String nome;
     protected double saldo;
     protected Date dataAbertura;
-    protected int tipoConta; // (comum, especial ou poupança)
+    protected int tipoConta;
     protected String dataEncerramento;
-    protected int situacao; // (se está ativa ou inativa) e senha
+    protected int situacao;
     protected String senha;
     
     protected ClientRegistration client;
@@ -58,10 +59,9 @@ public class ContaComum {
             this.dataAbertura = date;
             this.nome = nome;
             this.situacao = 1;
-            this.dataEncerramento = "";
             return this.numeroConta.toString();
         } catch (Exception e) {
-            return null;
+            throw new Error("Ops.... Algo deu errado no cadastro!");
         }
     }
     
@@ -74,13 +74,12 @@ public class ContaComum {
         return 0;
     }
     
-    public float saqueConta(float valor, String senha){
+    public float saqueConta(float valor, String senha, UUID numConta){
         for(ContaComum conta : client.getContas()){
-            if(valor < conta.getSaldo() && this.valSenha(senha) == 1){
+            if(valor <= conta.getSaldo() && this.valSenha(senha) == 1 && conta.getNumeroConta().equals(numConta)){
                 conta.setSaldo((float) conta.getSaldo() - valor);
+                JOptionPane.showMessageDialog(null, conta.getNome() + ", o saque foi feito no valor de: R$ " + valor);
                 return valor;
-            } else {
-                return 0;
             }
         }
         return 0;
@@ -90,9 +89,9 @@ public class ContaComum {
         this.client.getContas().forEach(item -> {
             if(item.getNumeroConta().equals(numConta)){
                 item.setSaldo((float) (item.getSaldo() + valor));
+                JOptionPane.showMessageDialog(null, item.getNome() + ", seu depósito foi feito");
             }
         });
-        System.out.println("Conta não encontrada");
     }
     
     public Double verSaldo(){
@@ -185,4 +184,5 @@ public class ContaComum {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+    
 }

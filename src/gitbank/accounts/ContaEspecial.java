@@ -26,8 +26,8 @@ public class ContaEspecial extends ContaComum {
     }
     
     @Override
-    public float saqueConta(float valor, String senha) {
-        super.saqueConta(valor, senha);
+    public float saqueConta(float valor, String senha, UUID numConta) {
+        super.saqueConta(valor, senha, numConta);
         
         if(valor < this.limite){
             super.saldo -= valor;
@@ -39,11 +39,11 @@ public class ContaEspecial extends ContaComum {
     }
     
     /*
-    O outro método contabiliza diariamente o valor de juros a ser pago pelo uso do limite
-    do cheque especial do saldo da conta do correntista, até que o limite seja coberto. 
-    Este método não recebe um número de conta específico, pois, ao ser chamado ele
-    verificará todas as instâncias da classe ContaEspecial, à procura de contas que
-    estejam utilizando o limite da conta especial. 
+        O outro método contabiliza diariamente o valor de juros a ser pago pelo uso do limite
+        do cheque especial do saldo da conta do correntista, até que o limite seja coberto. 
+        Este método não recebe um número de conta específico, pois, ao ser chamado ele
+        verificará todas as instâncias da classe ContaEspecial, à procura de contas que
+        estejam utilizando o limite da conta especial. 
     */
 
     public double getLimite() {

@@ -21,6 +21,7 @@ public class GUICadastroContaComum extends javax.swing.JFrame {
     private ContaEspecial contaEspecial;
     private ContaPoupanca contaPoupanca;
     private DataBase database;
+    public static int haveAccount = 0;
 
     public GUICadastroContaComum() {
         initComponents();
@@ -52,6 +53,10 @@ public class GUICadastroContaComum extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jTF_nome = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jTF_dataEncerramento = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +96,8 @@ public class GUICadastroContaComum extends javax.swing.JFrame {
 
         jLabel5.setText("Nome");
 
+        jLabel6.setText("Data de Encerramento");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -99,7 +106,7 @@ public class GUICadastroContaComum extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(63, 63, 63)
@@ -115,18 +122,24 @@ public class GUICadastroContaComum extends javax.swing.JFrame {
                                     .addComponent(jLabel2)
                                     .addComponent(jTF_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTF_Valor, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1)))))
+                                    .addComponent(jLabel1)))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTF_dataEncerramento, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator1)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(153, 153, 153)
+                        .addGap(147, 147, 147)
                         .addComponent(jLabel4)))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel4)
-                .addGap(38, 38, 38)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel5))
@@ -144,7 +157,13 @@ public class GUICadastroContaComum extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTF_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGap(36, 36, 36)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTF_dataEncerramento, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -168,33 +187,38 @@ public class GUICadastroContaComum extends javax.swing.JFrame {
        int Tipo = Integer.parseInt(this.jTF_Tipo.getText());
        String Senha = this.jTF_Senha.getText();
        String nome = this.jTF_nome.getText();
+       String dataEncerramento = this.jTF_dataEncerramento.getText();
        
-       this.database.getClient().forEach(cliente -> {
-           if(cliente.getNome().toUpperCase().equals(nome.toUpperCase())){
-            this.contaComum = new ContaComum(UUID.randomUUID(), 0, new Date(), 1, "", 0, "", "");
-            this.contaPoupanca = new ContaPoupanca(UUID.randomUUID(), 0, new Date(), 1, "", 0, "", "");
-            this.contaEspecial = new ContaEspecial(0, UUID.randomUUID(), 0, new Date(), 1, "", 0, "", "");
+       if(this.database.getClient().size() >= 1){
+        this.database.getClient().forEach(cliente -> {
+            if(cliente.getNome().toUpperCase().equals(nome.toUpperCase())){
+                 this.contaComum = new ContaComum(UUID.randomUUID(), 0, new Date(), 1, dataEncerramento, 0, "", "");
+                 this.contaPoupanca = new ContaPoupanca(UUID.randomUUID(), 0, new Date(), 1, dataEncerramento, 0, "", "");
+                 this.contaEspecial = new ContaEspecial(0, UUID.randomUUID(), 0, new Date(), 1, dataEncerramento, 0, "", "");
 
-            String numConta = "";
+                 String numConta = "";
 
-            if(Tipo == 1){
-                numConta = this.contaComum.aberturaConta(Valor, Tipo, Senha, nome);
-                this.client.setContas(contaComum);
-            } else if(Tipo == 2){
-                numConta = this.contaEspecial.aberturaConta(Valor, Tipo, Senha, nome);
-                this.contaEspecial.setLimite(9000);
-                this.client.setContas(contaEspecial);
-            } else if (Tipo == 3){
-                numConta = this.contaPoupanca.aberturaConta(Valor, Tipo, Senha, nome);
-                this.client.setContas(contaPoupanca);
-            } else {
-                System.out.println("Tipo de conta não informado");
+                 if(Tipo == 1){
+                     numConta = this.contaComum.aberturaConta(Valor, Tipo, Senha, nome);
+                     this.client.setContas(contaComum);
+                 } else if(Tipo == 2){
+                     numConta = this.contaEspecial.aberturaConta(Valor, Tipo, Senha, nome);
+                     double limit = Math.random() * (50000 - 100 + 1) + 100;
+                     this.contaEspecial.setLimite(limit);
+                     this.client.setContas(contaEspecial);
+                 } else if (Tipo == 3){
+                     numConta = this.contaPoupanca.aberturaConta(Valor, Tipo, Senha, nome);
+                     this.client.setContas(contaPoupanca);
+                 } else {
+                    JOptionPane.showMessageDialog(null, "Tipo de conta não encontrado.\n1-Comum\n2-Especial\n3-Poupança");
+                 }
+                 JOptionPane.showMessageDialog(null, "O número da sua conta é: " + numConta);
             }
-             JOptionPane.showMessageDialog(null, "O número da sua conta é: " + numConta);
-           } else {
-               JOptionPane.showMessageDialog(null, "Você não tem nenhum cadastro na Agência, faça um cadastro antes.");
-           }
-       });
+        });
+       } else {
+           JOptionPane.showMessageDialog(null, "Você não tem nenhum cadastro na Agência, faça um cadastro antes.");
+       }
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -244,9 +268,13 @@ public class GUICadastroContaComum extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTF_Senha;
     private javax.swing.JTextField jTF_Tipo;
     private javax.swing.JTextField jTF_Valor;
+    private javax.swing.JTextField jTF_dataEncerramento;
     private javax.swing.JTextField jTF_nome;
     // End of variables declaration//GEN-END:variables
 }
